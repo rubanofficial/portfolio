@@ -7,53 +7,21 @@ export default function LeetCodeStats() {
     const [error, setError] = useState(null);
 
     useEffect(() => {
-        const fetchLeetCodeStats = async () => {
-            try {
-                setLoading(true);
-                // Using a public CORS-enabled LeetCode API
-                const response = await fetch('https://alfa-leetcode-api.onrender.com/userProfile/S_RUBAN');
-
-                if (!response.ok) {
-                    throw new Error('Failed to fetch LeetCode stats');
-                }
-
-                const data = await response.json();
-                
-                if (data && data.userProfile) {
-                    const profile = data.userProfile;
-                    const stats = {
-                        username: profile.username || 'S_RUBAN',
-                        ranking: profile.ranking || 0,
-                        totalSolved: profile.totalSolved || 0,
-                        easySolved: profile.easySolved || 0,
-                        mediumSolved: profile.mediumSolved || 0,
-                        hardSolved: profile.hardSolved || 0,
-                        acceptanceRate: parseFloat(profile.acceptanceRate) || 0
-                    };
-                    setStats(stats);
-                    setError(null);
-                } else {
-                    throw new Error('Invalid response data');
-                }
-            } catch (err) {
-                console.error('Error fetching LeetCode stats:', err);
-                setError(null);
-                // Fallback data for demo
-                setStats({
-                    username: 'S_RUBAN',
-                    totalSolved: 150,
-                    easySolved: 75,
-                    mediumSolved: 50,
-                    hardSolved: 25,
-                    ranking: 250000,
-                    acceptanceRate: 45.5
-                });
-            } finally {
-                setLoading(false);
-            }
+        // Using hardcoded data from your LeetCode profile
+        const stats = {
+            username: 'S_RUBAN',
+            ranking: 506076,
+            totalSolved: 278,
+            easySolved: 175,
+            mediumSolved: 100,
+            hardSolved: 3,
+            acceptanceRate: 45.2,
+            contestRating: 1335
         };
-
-        fetchLeetCodeStats();
+        
+        setStats(stats);
+        setError(null);
+        setLoading(false);
     }, []);
 
     if (loading) {
