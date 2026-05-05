@@ -5,7 +5,17 @@ export default function Certifications() {
             issuer: 'MongoDB Inc.',
             icon: '📜',
             description: 'Certified MongoDB Associate Developer demonstrating proficiency in MongoDB database design and development',
-            link: 'https://university.mongodb.com'
+            link: 'https://university.mongodb.com',
+            isDownload: false
+        },
+        {
+            title: 'Full Stack Developer Internship',
+            issuer: 'SAN Technovation Pvt Ltd',
+            icon: '🏢',
+            description: 'Completed internship specializing in resume parsing with spaCy NER and email extraction using regex & fuzzy matching',
+            link: '/SAN INTERNSHIP.pdf',
+            isDownload: true,
+            downloadName: 'SAN_Internship_Certificate.pdf'
         }
     ];
 
@@ -31,14 +41,24 @@ export default function Certifications() {
                             </div>
                             <p className="text-gray-300 mb-6">{cert.description}</p>
                             {cert.link && (
-                                <a
-                                    href={cert.link}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="inline-block border-2 border-cyan-400 text-cyan-400 hover:bg-cyan-400 hover:text-slate-900 font-semibold py-2 px-4 rounded transition duration-300"
-                                >
-                                    Verify Credential
-                                </a>
+                                cert.isDownload ? (
+                                    <a
+                                        href={cert.link}
+                                        download={cert.downloadName}
+                                        className="inline-block bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 text-white font-semibold py-2 px-4 rounded transition duration-300"
+                                    >
+                                        📥 Download Certificate
+                                    </a>
+                                ) : (
+                                    <a
+                                        href={cert.link}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="inline-block border-2 border-cyan-400 text-cyan-400 hover:bg-cyan-400 hover:text-slate-900 font-semibold py-2 px-4 rounded transition duration-300"
+                                    >
+                                        Verify Credential
+                                    </a>
+                                )
                             )}
                         </div>
                     ))}

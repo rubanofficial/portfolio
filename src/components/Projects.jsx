@@ -13,7 +13,7 @@ export default function Projects() {
             title: 'CampusVoice – Complaint Management',
             description: 'Smart complaint management system with JWT authentication, role-based access control, AI sentiment analysis, and automatic priority classification using Gemini API.',
             tech: ['React.js', 'Node.js', 'Express.js', 'MongoDB', 'JWT', 'Gemini API', 'AI'],
-            link: null,
+            link: 'https://campusvoice-five.vercel.app',
             github: 'https://github.com/rubanofficial/campusvoice'
         },
         {
