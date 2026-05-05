@@ -1,5 +1,6 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
+import emailjs from '@emailjs/browser';
 
 export default function Contact() {
     const [formData, setFormData] = useState({
@@ -10,6 +11,11 @@ export default function Contact() {
     const [status, setStatus] = useState('');
     const [loading, setLoading] = useState(false);
 
+    // Initialize EmailJS
+    useEffect(() => {
+        emailjs.init(import.meta.env.VITE_EMAILJS_PUBLIC_KEY || 'YOUR_PUBLIC_KEY');
+    }, []);
+
     const handleChange = (e) => {
         setFormData({
             ...formData,
@@ -17,20 +23,34 @@ export default function Contact() {
         });
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         setLoading(true);
         setStatus('Sending...');
 
-        // Simulate email sending (in production, use EmailJS or backend API)
-        setTimeout(() => {
-            const mailtoLink = `mailto:rubans082005@gmail.com?subject=${encodeURIComponent('Portfolio Contact')}&body=${encodeURIComponent(`Name: ${formData.name}\nEmail: ${formData.email}\n\n${formData.message}`)}`;
-            window.location.href = mailtoLink;
-            setStatus('Message sent! Opening email client...');
+        try {
+            await emailjs.send(
+                import.meta.env.VITE_EMAILJS_SERVICE_ID || 'YOUR_SERVICE_ID',
+                import.meta.env.VITE_EMAILJS_TEMPLATE_ID || 'YOUR_TEMPLATE_ID',
+                {
+                    from_name: formData.name,
+                    from_email: formData.email,
+                    to_email: 'rubans082005@gmail.com',
+                    message: formData.message,
+                    reply_to: formData.email
+                }
+            );
+
+            setStatus('✅ Message sent successfully! I\'ll get back to you soon.');
             setFormData({ name: '', email: '', message: '' });
+            setTimeout(() => setStatus(''), 4000);
+        } catch (error) {
+            console.error('Email send error:', error);
+            setStatus('❌ Failed to send message. Please try again or contact via email.');
+            setTimeout(() => setStatus(''), 4000);
+        } finally {
             setLoading(false);
-            setTimeout(() => setStatus(''), 3000);
-        }, 1000);
+        }
     };
 
     return (
@@ -181,7 +201,7 @@ export default function Contact() {
                             <motion.p
                                 initial={{ opacity: 0 }}
                                 animate={{ opacity: 1 }}
-                                className="text-green-400 text-sm mb-4"
+                                className={`text-sm mb-4 ${status.includes('✅') ? 'text-green-400' : status.includes('❌') ? 'text-red-400' : 'text-blue-400'}`}
                             >
                                 {status}
                             </motion.p>
