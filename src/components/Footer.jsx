@@ -54,10 +54,10 @@ export default function Footer() {
                                 href="https://leetcode.com/u/S_RUBAN/"
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="text-gray-400 hover:text-cyan-400 transition text-lg"
+                                className="text-gray-400 hover:text-cyan-400 transition text-lg font-bold text-xl"
                                 title="LeetCode"
                             >
-                                <i className="fas fa-code"></i>
+                                &lt;&gt;
                             </a>
                         </div>
                     </div>

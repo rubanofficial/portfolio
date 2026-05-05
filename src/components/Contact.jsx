@@ -107,10 +107,10 @@ export default function Contact() {
                                             href="https://leetcode.com/u/S_RUBAN/"
                                             target="_blank"
                                             rel="noopener noreferrer"
-                                            className="text-cyan-400 hover:text-cyan-300 text-2xl transition"
+                                            className="text-cyan-400 hover:text-cyan-300 text-2xl transition font-bold"
                                             title="LeetCode"
                                         >
-                                            <i className="fab fa-code"></i>
+                                            &lt;&gt;
                                         </a>
                                     </div>
                                 </div>

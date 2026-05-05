@@ -112,10 +112,10 @@ export default function Hero() {
                         rel="noopener noreferrer"
                         whileHover={{ scale: 1.2, rotate: 10 }}
                         whileTap={{ scale: 0.9 }}
-                        className="text-gray-300 hover:text-yellow-400 transition duration-300 text-3xl"
+                        className="text-gray-300 hover:text-yellow-400 transition duration-300 text-3xl font-bold"
                         title="LeetCode"
                     >
-                        <i className="fab fa-code"></i>
+                        &lt;&gt;
                     </motion.a>
                 </motion.div>
 
