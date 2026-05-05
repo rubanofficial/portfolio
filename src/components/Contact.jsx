@@ -1,7 +1,5 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import html2canvas from 'html2canvas';
-import jsPDF from 'jspdf';
 
 export default function Contact() {
     const [formData, setFormData] = useState({
@@ -33,64 +31,6 @@ export default function Contact() {
             setLoading(false);
             setTimeout(() => setStatus(''), 3000);
         }, 1000);
-    };
-
-    const generateResume = async () => {
-        setLoading(true);
-        const resumeContent = `
-      <div style="font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 800px; margin: 0 auto; padding: 20px;">
-        <h1 style="text-align: center; color: #0ea5e9; margin-bottom: 5px;">RUBAN S</h1>
-        <p style="text-align: center; color: #666; margin-bottom: 20px;">Full-Stack Developer | MERN | Email: rubans082005@gmail.com | Phone: 6374372005</p>
-        <p style="text-align: center; margin-bottom: 20px;">
-          <a href="https://github.com/rubanofficial" style="color: #0ea5e9; margin-right: 15px;">GitHub</a>
-          <a href="https://linkedin.com/in/ruban-s" style="color: #0ea5e9;">LinkedIn</a>
-        </p>
-
-        <h2 style="color: #0ea5e9; border-bottom: 2px solid #0ea5e9; padding-bottom: 5px; margin-top: 20px;">PROFILE</h2>
-        <p>Full-Stack Developer proficient in the MERN stack, with hands-on experience building responsive frontend interfaces and secure backend architectures. Experienced in REST API design, JWT-based authentication, database modeling, and scalable application workflows.</p>
-
-        <h2 style="color: #0ea5e9; border-bottom: 2px solid #0ea5e9; padding-bottom: 5px; margin-top: 20px;">EDUCATION</h2>
-        <p><strong>B.Tech – Artificial Intelligence & Data Science</strong><br/>Kongu Engineering College (2023–2027) | CGPA: 7.66</p>
-        <p><strong>HSC – 92.5%</strong><br/>Equitas Gurukul Matric School (2022–2023)</p>
-
-        <h2 style="color: #0ea5e9; border-bottom: 2px solid #0ea5e9; padding-bottom: 5px; margin-top: 20px;">SKILLS</h2>
-        <p><strong>Languages:</strong> C, Python, Java, JavaScript</p>
-        <p><strong>Frontend:</strong> HTML5, CSS3, React.js, Tailwind CSS</p>
-        <p><strong>Backend:</strong> Node.js, Express.js, REST APIs, JWT Authentication</p>
-        <p><strong>Database:</strong> MongoDB, SQL</p>
-        <p><strong>Tools:</strong> Git, GitHub, Postman, VS Code, npm</p>
-
-        <h2 style="color: #0ea5e9; border-bottom: 2px solid #0ea5e9; padding-bottom: 5px; margin-top: 20px;">PROJECTS</h2>
-        <p><strong>LIVITY – Real Estate Management System</strong><br/>
-        Built responsive property listing platform with seller & buyer dashboards. Tech: React.js, Tailwind CSS, Node.js, Express.js, MongoDB, Cloudinary, JWT</p>
-        
-        <p><strong>CampusVoice – Smart Complaint Management System</strong><br/>
-        Implemented JWT authentication, role-based access, AI sentiment analysis. Tech: React.js, Node.js, Express.js, MongoDB, Gemini API</p>
-        
-        <p><strong>Library Management System</strong><br/>
-        Console-based system using OOP principles. Tech: Java, Collections Framework</p>
-
-        <h2 style="color: #0ea5e9; border-bottom: 2px solid #0ea5e9; padding-bottom: 5px; margin-top: 20px;">EXPERIENCE</h2>
-        <p><strong>Intern – Full Stack Developer</strong><br/>
-        SAN Technovation Pvt Ltd (Aug 2025 – Sep 2025)<br/>
-        • Resume name extraction using spaCy NER<br/>
-        • Email extraction using regex & fuzzy matching</p>
-
-        <h2 style="color: #0ea5e9; border-bottom: 2px solid #0ea5e9; padding-bottom: 5px; margin-top: 20px;">CERTIFICATIONS</h2>
-        <p>MongoDB Associate Developer – MongoDB Inc.</p>
-      </div>
-    `;
-
-        const canvas = await html2canvas(document.createElement('div'), {
-            html: resumeContent,
-            backgroundColor: '#ffffff'
-        });
-
-        const pdf = new jsPDF('p', 'mm', 'a4');
-        const imgData = canvas.toDataURL('image/png');
-        pdf.addImage(imgData, 'PNG', 10, 10, 190, 277);
-        pdf.save('Ruban_S_Resume.pdf');
-        setLoading(false);
     };
 
     return (
@@ -176,15 +116,15 @@ export default function Contact() {
                                 </div>
                             </div>
 
-                            <motion.button
-                                onClick={generateResume}
-                                disabled={loading}
+                            <motion.a
+                                href="/RUBAN RESUME.pdf"
+                                download="RUBAN_S_Resume.pdf"
                                 whileHover={{ scale: 1.05 }}
                                 whileTap={{ scale: 0.95 }}
-                                className="w-full mt-8 bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 text-white font-bold py-3 rounded-lg transition duration-300 disabled:opacity-50"
+                                className="w-full mt-8 bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 text-white font-bold py-3 rounded-lg transition duration-300 block text-center"
                             >
-                                {loading ? 'Generating...' : '📥 Download Resume (PDF)'}
-                            </motion.button>
+                                📥 Download Resume (PDF)
+                            </motion.a>
                         </div>
                     </motion.div>
 
