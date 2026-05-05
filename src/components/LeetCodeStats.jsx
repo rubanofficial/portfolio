@@ -10,54 +10,25 @@ export default function LeetCodeStats() {
         const fetchLeetCodeStats = async () => {
             try {
                 setLoading(true);
-                const query = `
-                    query getUserProfile($username: String!) {
-                        matchedUser(username: $username) {
-                            username
-                            profile {
-                                ranking
-                                userAvatar
-                            }
-                            submitStats: submitStatsGlobal {
-                                acSubmissionNum {
-                                    difficulty
-                                    count
-                                }
-                            }
-                        }
-                    }
-                `;
-
-                const response = await fetch('https://leetcode.com/graphql', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Referer': 'https://leetcode.com'
-                    },
-                    body: JSON.stringify({
-                        query: query,
-                        variables: {
-                            username: 'S_RUBAN'
-                        }
-                    })
-                });
+                // Using a public CORS-enabled LeetCode API
+                const response = await fetch('https://alfa-leetcode-api.onrender.com/userProfile/S_RUBAN');
 
                 if (!response.ok) {
                     throw new Error('Failed to fetch LeetCode stats');
                 }
 
-                const result = await response.json();
+                const data = await response.json();
                 
-                if (result.data && result.data.matchedUser) {
-                    const user = result.data.matchedUser;
+                if (data && data.userProfile) {
+                    const profile = data.userProfile;
                     const stats = {
-                        username: user.username,
-                        ranking: user.profile?.ranking || 0,
-                        totalSolved: user.submitStats?.acSubmissionNum?.reduce((sum, item) => sum + item.count, 0) || 0,
-                        easySolved: user.submitStats?.acSubmissionNum?.find(item => item.difficulty === 'Easy')?.count || 0,
-                        mediumSolved: user.submitStats?.acSubmissionNum?.find(item => item.difficulty === 'Medium')?.count || 0,
-                        hardSolved: user.submitStats?.acSubmissionNum?.find(item => item.difficulty === 'Hard')?.count || 0,
-                        acceptanceRate: 45.5 // Placeholder - calculate if available
+                        username: profile.username || 'S_RUBAN',
+                        ranking: profile.ranking || 0,
+                        totalSolved: profile.totalSolved || 0,
+                        easySolved: profile.easySolved || 0,
+                        mediumSolved: profile.mediumSolved || 0,
+                        hardSolved: profile.hardSolved || 0,
+                        acceptanceRate: parseFloat(profile.acceptanceRate) || 0
                     };
                     setStats(stats);
                     setError(null);
@@ -65,10 +36,11 @@ export default function LeetCodeStats() {
                     throw new Error('Invalid response data');
                 }
             } catch (err) {
-                setError('Unable to load LeetCode stats. Please try again later.');
                 console.error('Error fetching LeetCode stats:', err);
+                setError(null);
                 // Fallback data for demo
                 setStats({
+                    username: 'S_RUBAN',
                     totalSolved: 150,
                     easySolved: 75,
                     mediumSolved: 50,
@@ -76,7 +48,6 @@ export default function LeetCodeStats() {
                     ranking: 250000,
                     acceptanceRate: 45.5
                 });
-                setError(null);
             } finally {
                 setLoading(false);
             }
