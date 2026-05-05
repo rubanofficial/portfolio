@@ -13,6 +13,7 @@ export default function Navbar() {
         { label: 'Projects', id: 'projects' },
         { label: 'Experience', id: 'experience' },
         { label: 'Education', id: 'education' },
+        { label: 'LeetCode', id: 'leetcode' },
         { label: 'Contact', id: 'contact' }
     ];
 
