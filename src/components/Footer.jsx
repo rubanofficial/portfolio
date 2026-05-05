@@ -55,8 +55,9 @@ export default function Footer() {
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-gray-400 hover:text-cyan-400 transition text-lg"
+                title="LeetCode"
               >
-                <i className="fab fa-code"></i>
+                <i className="fas fa-code"></i>
               </a>
             </div>
           </div>
