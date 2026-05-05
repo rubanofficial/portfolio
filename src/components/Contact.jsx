@@ -1,4 +1,7 @@
 import { useState } from 'react';
+import { motion } from 'framer-motion';
+import html2canvas from 'html2canvas';
+import jsPDF from 'jspdf';
 
 export default function Contact() {
   const [formData, setFormData] = useState({
@@ -6,6 +9,8 @@ export default function Contact() {
     email: '',
     message: ''
   });
+  const [status, setStatus] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
     setFormData({
@@ -16,22 +21,96 @@ export default function Contact() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Open default email client
-    const subject = encodeURIComponent('Portfolio Contact');
-    const body = encodeURIComponent(`Name: ${formData.name}\nEmail: ${formData.email}\n\n${formData.message}`);
-    window.location.href = `mailto:rubans082005@gmail.com?subject=${subject}&body=${body}`;
-    setFormData({ name: '', email: '', message: '' });
+    setLoading(true);
+    setStatus('Sending...');
+
+    // Simulate email sending (in production, use EmailJS or backend API)
+    setTimeout(() => {
+      const mailtoLink = `mailto:rubans082005@gmail.com?subject=${encodeURIComponent('Portfolio Contact')}&body=${encodeURIComponent(`Name: ${formData.name}\nEmail: ${formData.email}\n\n${formData.message}`)}`;
+      window.location.href = mailtoLink;
+      setStatus('Message sent! Opening email client...');
+      setFormData({ name: '', email: '', message: '' });
+      setLoading(false);
+      setTimeout(() => setStatus(''), 3000);
+    }, 1000);
+  };
+
+  const generateResume = async () => {
+    setLoading(true);
+    const resumeContent = `
+      <div style="font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 800px; margin: 0 auto; padding: 20px;">
+        <h1 style="text-align: center; color: #0ea5e9; margin-bottom: 5px;">RUBAN S</h1>
+        <p style="text-align: center; color: #666; margin-bottom: 20px;">Full-Stack Developer | MERN | Email: rubans082005@gmail.com | Phone: 6374372005</p>
+        <p style="text-align: center; margin-bottom: 20px;">
+          <a href="https://github.com/rubanofficial" style="color: #0ea5e9; margin-right: 15px;">GitHub</a>
+          <a href="https://linkedin.com/in/ruban-s" style="color: #0ea5e9;">LinkedIn</a>
+        </p>
+
+        <h2 style="color: #0ea5e9; border-bottom: 2px solid #0ea5e9; padding-bottom: 5px; margin-top: 20px;">PROFILE</h2>
+        <p>Full-Stack Developer proficient in the MERN stack, with hands-on experience building responsive frontend interfaces and secure backend architectures. Experienced in REST API design, JWT-based authentication, database modeling, and scalable application workflows.</p>
+
+        <h2 style="color: #0ea5e9; border-bottom: 2px solid #0ea5e9; padding-bottom: 5px; margin-top: 20px;">EDUCATION</h2>
+        <p><strong>B.Tech – Artificial Intelligence & Data Science</strong><br/>Kongu Engineering College (2023–2027) | CGPA: 7.66</p>
+        <p><strong>HSC – 92.5%</strong><br/>Equitas Gurukul Matric School (2022–2023)</p>
+
+        <h2 style="color: #0ea5e9; border-bottom: 2px solid #0ea5e9; padding-bottom: 5px; margin-top: 20px;">SKILLS</h2>
+        <p><strong>Languages:</strong> C, Python, Java, JavaScript</p>
+        <p><strong>Frontend:</strong> HTML5, CSS3, React.js, Tailwind CSS</p>
+        <p><strong>Backend:</strong> Node.js, Express.js, REST APIs, JWT Authentication</p>
+        <p><strong>Database:</strong> MongoDB, SQL</p>
+        <p><strong>Tools:</strong> Git, GitHub, Postman, VS Code, npm</p>
+
+        <h2 style="color: #0ea5e9; border-bottom: 2px solid #0ea5e9; padding-bottom: 5px; margin-top: 20px;">PROJECTS</h2>
+        <p><strong>LIVITY – Real Estate Management System</strong><br/>
+        Built responsive property listing platform with seller & buyer dashboards. Tech: React.js, Tailwind CSS, Node.js, Express.js, MongoDB, Cloudinary, JWT</p>
+        
+        <p><strong>CampusVoice – Smart Complaint Management System</strong><br/>
+        Implemented JWT authentication, role-based access, AI sentiment analysis. Tech: React.js, Node.js, Express.js, MongoDB, Gemini API</p>
+        
+        <p><strong>Library Management System</strong><br/>
+        Console-based system using OOP principles. Tech: Java, Collections Framework</p>
+
+        <h2 style="color: #0ea5e9; border-bottom: 2px solid #0ea5e9; padding-bottom: 5px; margin-top: 20px;">EXPERIENCE</h2>
+        <p><strong>Intern – Full Stack Developer</strong><br/>
+        SAN Technovation Pvt Ltd (Aug 2025 – Sep 2025)<br/>
+        • Resume name extraction using spaCy NER<br/>
+        • Email extraction using regex & fuzzy matching</p>
+
+        <h2 style="color: #0ea5e9; border-bottom: 2px solid #0ea5e9; padding-bottom: 5px; margin-top: 20px;">CERTIFICATIONS</h2>
+        <p>MongoDB Associate Developer – MongoDB Inc.</p>
+      </div>
+    `;
+
+    const canvas = await html2canvas(document.createElement('div'), {
+      html: resumeContent,
+      backgroundColor: '#ffffff'
+    });
+
+    const pdf = new jsPDF('p', 'mm', 'a4');
+    const imgData = canvas.toDataURL('image/png');
+    pdf.addImage(imgData, 'PNG', 10, 10, 190, 277);
+    pdf.save('Ruban_S_Resume.pdf');
+    setLoading(false);
   };
 
   return (
     <section id="contact" className="py-20 bg-slate-800 text-white px-4">
       <div className="max-w-4xl mx-auto">
-        <h2 className="text-4xl md:text-5xl font-bold mb-12 text-center text-transparent bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text">
+        <motion.h2
+          initial={{ opacity: 0, y: -20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="text-4xl md:text-5xl font-bold mb-12 text-center text-transparent bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text"
+        >
           Get In Touch
-        </h2>
+        </motion.h2>
 
         <div className="grid md:grid-cols-2 gap-12">
-          <div>
+          <motion.div
+            initial={{ opacity: 0, x: -20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+          >
             <h3 className="text-2xl font-bold text-cyan-400 mb-6">Contact Information</h3>
             
             <div className="space-y-6">
@@ -96,18 +175,35 @@ export default function Contact() {
                   </div>
                 </div>
               </div>
-            </div>
-          </div>
 
-          <form onSubmit={handleSubmit} className="bg-gradient-to-br from-slate-700 to-slate-900 p-8 rounded-lg border border-cyan-500/30">
+              <motion.button
+                onClick={generateResume}
+                disabled={loading}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="w-full mt-8 bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 text-white font-bold py-3 rounded-lg transition duration-300 disabled:opacity-50"
+              >
+                {loading ? 'Generating...' : '📥 Download Resume (PDF)'}
+              </motion.button>
+            </div>
+          </motion.div>
+
+          <motion.form
+            onSubmit={handleSubmit}
+            initial={{ opacity: 0, x: 20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            className="bg-gradient-to-br from-slate-700 to-slate-900 p-8 rounded-lg border border-cyan-500/30"
+          >
             <div className="mb-6">
               <label className="block text-cyan-400 font-semibold mb-2">Name</label>
-              <input
+              <motion.input
                 type="text"
                 name="name"
                 value={formData.name}
                 onChange={handleChange}
                 required
+                whileFocus={{ scale: 1.02 }}
                 className="w-full bg-slate-800 border border-slate-600 rounded-lg px-4 py-3 text-white placeholder-gray-500 focus:border-cyan-400 focus:outline-none transition"
                 placeholder="Your Name"
               />
@@ -115,12 +211,13 @@ export default function Contact() {
 
             <div className="mb-6">
               <label className="block text-cyan-400 font-semibold mb-2">Email</label>
-              <input
+              <motion.input
                 type="email"
                 name="email"
                 value={formData.email}
                 onChange={handleChange}
                 required
+                whileFocus={{ scale: 1.02 }}
                 className="w-full bg-slate-800 border border-slate-600 rounded-lg px-4 py-3 text-white placeholder-gray-500 focus:border-cyan-400 focus:outline-none transition"
                 placeholder="your@email.com"
               />
@@ -128,24 +225,38 @@ export default function Contact() {
 
             <div className="mb-6">
               <label className="block text-cyan-400 font-semibold mb-2">Message</label>
-              <textarea
+              <motion.textarea
                 name="message"
                 value={formData.message}
                 onChange={handleChange}
                 required
                 rows="5"
+                whileFocus={{ scale: 1.02 }}
                 className="w-full bg-slate-800 border border-slate-600 rounded-lg px-4 py-3 text-white placeholder-gray-500 focus:border-cyan-400 focus:outline-none transition resize-none"
                 placeholder="Your message here..."
-              ></textarea>
+              ></motion.textarea>
             </div>
 
-            <button
+            {status && (
+              <motion.p
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                className="text-green-400 text-sm mb-4"
+              >
+                {status}
+              </motion.p>
+            )}
+
+            <motion.button
               type="submit"
-              className="w-full bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-600 hover:to-cyan-600 text-white font-bold py-3 rounded-lg transition duration-300 transform hover:scale-105"
+              disabled={loading}
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+              className="w-full bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-600 hover:to-cyan-600 text-white font-bold py-3 rounded-lg transition duration-300 disabled:opacity-50"
             >
-              Send Message
-            </button>
-          </form>
+              {loading ? 'Sending...' : 'Send Message'}
+            </motion.button>
+          </motion.form>
         </div>
       </div>
     </section>
