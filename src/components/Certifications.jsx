@@ -5,8 +5,9 @@ export default function Certifications() {
             issuer: 'MongoDB Inc.',
             icon: '📜',
             description: 'Certified MongoDB Associate Developer demonstrating proficiency in MongoDB database design and development',
-            link: 'https://university.mongodb.com',
-            isDownload: false
+            link: '/mongodb ruban.pdf',
+            isDownload: true,
+            downloadName: 'MongoDB_Associate_Developer.pdf'
         },
         {
             title: 'Full Stack Developer Internship',

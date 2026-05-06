@@ -18,7 +18,7 @@ export default function LeetCodeStats() {
             acceptanceRate: 45.2,
             contestRating: 1335
         };
-        
+
         setStats(stats);
         setError(null);
         setLoading(false);
