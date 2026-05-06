@@ -3,20 +3,11 @@ export default function Certifications() {
         {
             title: 'MongoDB Associate Developer',
             issuer: 'MongoDB Inc.',
-            icon: '📜',
+            icon: '◆',
             description: 'Certified MongoDB Associate Developer demonstrating proficiency in MongoDB database design and development',
             link: '/mongodb ruban.pdf',
             isDownload: true,
             downloadName: 'MongoDB_Associate_Developer.pdf'
-        },
-        {
-            title: 'Full Stack Developer Internship',
-            issuer: 'SAN Technovation Pvt Ltd',
-            icon: '🏢',
-            description: 'Completed internship specializing in resume parsing with spaCy NER and email extraction using regex & fuzzy matching',
-            link: '/SAN INTERNSHIP.pdf',
-            isDownload: true,
-            downloadName: 'SAN_Internship_Certificate.pdf'
         }
     ];
 

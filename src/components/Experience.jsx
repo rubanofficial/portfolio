@@ -1,7 +1,7 @@
 export default function Experience() {
     const experiences = [
         {
-            title: 'Intern ',
+            title: 'Full Stack Developer Intern',
             company: 'SAN Technovation Pvt Ltd',
             duration: 'Aug 2025 – Sep 2025',
             description: [
@@ -9,7 +9,9 @@ export default function Experience() {
                 'Developed email extraction functionality using regex patterns and fuzzy matching algorithms',
                 'Worked on automating document processing and data extraction tasks'
             ],
-            skills: ['spaCy', 'NER', 'Regex', 'Python', 'Data Processing']
+            skills: ['spaCy', 'NER', 'Regex', 'Python', 'Data Processing'],
+            certificateLink: '/SAN INTERNSHIP.pdf',
+            certificateName: 'SAN_Internship_Certificate.pdf'
         }
     ];
 
@@ -40,7 +42,7 @@ export default function Experience() {
                                 ))}
                             </ul>
 
-                            <div className="flex flex-wrap gap-2">
+                            <div className="flex flex-wrap gap-2 items-center">
                                 {exp.skills.map((skill, i) => (
                                     <span
                                         key={i}
@@ -49,6 +51,16 @@ export default function Experience() {
                                         {skill}
                                     </span>
                                 ))}
+                                {exp.certificateLink && (
+                                    <a
+                                        href={exp.certificateLink}
+                                        download={exp.certificateName}
+                                        className="bg-blue-500/20 text-blue-300 px-4 py-1 rounded-full text-sm border border-blue-400/30 hover:bg-blue-500/30 transition duration-300 font-semibold"
+                                        title="Download Certificate"
+                                    >
+                                        ↓ Certificate
+                                    </a>
+                                )}
                             </div>
                         </div>
                     ))}
